@@ -4,6 +4,69 @@ void main() {
   runApp(const MyApp());
 }
 
+//Use of Future for displaying user deplay result.
+Future<int> heavyFutureThatMultipleByTwo(int a) {
+  return Future.delayed(const Duration(seconds: 5), () => a * 2);
+}
+
+//Use of Stream
+Stream<String> getName() {
+  return Stream.periodic(const Duration(seconds: 2), (value) => "Foo");
+}
+
+void test() async {
+  final result = await heavyFutureThatMultipleByTwo(10);
+  print(result);
+
+  await for (final value in getName()) {
+    print(value);
+  }
+  print("Stream Finished Working");
+}
+
+//Generators
+//iterables => Lazy Collection
+Iterable<int> getValue() sync* {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+void test1() {
+  print(getValue());
+  for (final value in getValue()) {
+    print(value);
+    if (value == 2) {
+      break;
+    }
+  }
+}
+
+//Generics => To avoid re-writing Similar Codes
+/*class PairString {
+  final String value1;
+  final String value2;
+  PairString(this.value1, this.value2);
+}
+
+class PairInt {
+  final String value1;
+  final String value2;
+  PairInt(this.value1, this.value2);
+}*/
+
+class Pair<A, B> {
+  final A value1;
+  final B value2;
+
+  Pair(this.value1, this.value2);
+}
+
+void test2() {
+  final names = Pair('Foo', 20);
+  final name = Pair('Suraj', 'Adhikari');
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
